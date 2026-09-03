@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비전공자를 위한 바이브 코딩 — 독자 지원 페이지</title>
+<meta name="description" content="책 속 모든 프롬프트와 명령어를 복사 버튼으로 제공합니다.">
+<style>
+:root{--ink:#1f1d29;--sub:#6d6a78;--line:#e8e6ef;--accent:#5645d4;--soft:#f1eefb;--bg:#fbfaff;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--ink:#e9e7f2;--sub:#a5a2b2;--line:#33303f;--accent:#a99bf5;--soft:#282344;--bg:#17151f;--card:#201d2b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6}
+main{max-width:720px;margin:0 auto;padding:32px 16px 80px}
+header h1{font-size:1.45rem;margin:.2em 0}
+header p{color:var(--sub);font-size:.92rem;margin:.3em 0}
+.badge{display:inline-block;background:var(--soft);color:var(--accent);font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:99px}
+.howto{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:.9rem;margin:20px 0}
+.howto b{color:var(--accent)}
+section{margin-top:36px}
+h2{font-size:1.05rem;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.cnt{font-size:.75rem;color:var(--sub);font-weight:400}
+details.p{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
+details.p summary{cursor:pointer;padding:11px 14px;font-size:.92rem;font-weight:600;list-style:none;display:flex;gap:8px;align-items:baseline}
+details.p summary::-webkit-details-marker{display:none}
+details.p[open] summary{border-bottom:1px solid var(--line)}
+.num{color:var(--accent);font-size:.8rem;font-weight:700;white-space:nowrap}
+.codewrap{position:relative}
+pre{margin:0;padding:14px;padding-top:40px;overflow-x:auto;font-size:.82rem;line-height:1.55;background:var(--card)}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-all}
+.copy{position:absolute;top:8px;right:10px;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:5px 14px;font-size:.78rem;font-weight:700;cursor:pointer}
+.copy:active{opacity:.7}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--sub);font-size:.8rem}
+#search{width:100%;height:42px;margin-top:18px;padding:0 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem;background:var(--card);color:var(--ink)}
+</style>
+</head>
+<body>
+<main>
+<header>
+<span class="badge">독자 지원 페이지</span>
+<h1>비전공자를 위한 바이브 코딩</h1>
+<p>책 속 모든 프롬프트와 명령어 79개를 복사 버튼으로 제공합니다.</p>
+</header>
+<div class="howto">
+<b>사용법</b> — 제목을 누르면 내용이 펼쳐집니다. <b>[복사]</b>를 누른 뒤 클로드 코드 채팅창에 붙여넣으세요.
+[대괄호] 부분은 여러분의 값으로 바꿔 넣는 자리입니다 (대괄호도 지웁니다).
+</div>
+<input id="search" type="search" placeholder="프롬프트 검색 (예: 가계부, SQL, 배포)" oninput="filterItems(this.value)">
+<section>
+<h2>2장 가계부 앱 <span class="cnt">13개</span></h2>
+<details class="p">
+<summary><span class="num">2.1</span> 가계부 앱 생성</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>가계부 앱을 만들어줘.
+
+기능:
+- 거래 입력 (수입·지출·저축 구분)
+- 카테고리별 분류 (식비, 교통, 주거, 의료, 쇼핑, 여가, 기타)
+- 월별 내역 조회
+- 월별 통계 (총 수입, 총 지출, 카테고리별 금액)
+
+화면 구성(레이아웃)은 이렇게 해줘. 좌우 2단이야.
+- 왼쪽 패널(입력): 맨 위 주황색 카드에 지출/수입/저축 토글과 큰 금액 입력칸. 그 아래 &#x27;결제 문자 붙여넣기&#x27; 텍스트칸(지금은 빈 칸으로 두고, 자동 입력 기능은 나중에 붙임), 날짜([오늘][어제] + 날짜 선택기), 가맹점/내용, 카테고리·결제수단·소유자 드롭다운, 메모, 맨 아래 큰 주황색 [저장] 버튼.
+- 오른쪽 패널(보기): 거래 내역을 목록으로 크게 보여줘. 이 목록이 오른쪽의 대부분을 차지해. 목록 위에는 검색창과 필터(기간·카테고리·수입/지출), 그리고 월 이동(◀ 2026년 6월 ▶)을 넣어줘. 월 이동은 화면 맨 위 가운데가 아니라 이 오른쪽 패널 위에 둬. 맨 아래에는 이번 달 수입·지출·저축·잔액을 얇은 한 줄로 요약해줘. (큰 통계 블록을 위쪽에 만들지 마. 요약은 아래 한 줄이면 돼.)
+- 색감: 주황색을 포인트로, 나머지는 흰 배경에 파스텔. 카드는 둥근 모서리로.
+- 모든 금액은 천단위마다 콤마를 넣은 &#x27;원&#x27; 단위로 통일해서 보여줘. (예: 70,370원 / 1,234,000원) &#x27;만&#x27;·&#x27;억&#x27; 같은 축약 단위로 바꾸지 말고, 화면 어디서나 같은 형식으로 적용해줘.
+- 지금은 이 기능만 만들고, 앞으로 기능을 더할 때 화면 위쪽에 탭을 하나씩 추가할 거야. 그러니 탭을 나중에 붙이기 쉬운 구조로 만들어줘. (지금 없는 탭은 미리 만들지 마.)
+
+데이터베이스는 수파베이스를 사용해줘.
+필요한 데이터베이스 테이블을 만드는 SQL도 함께 알려줘.
+수파베이스 URL: [복사한 API URL]
+수파베이스 anon key: [복사한 Publishable key]
+
+Next.js로 만들어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.2</span> 신용카드 문자 자동 입력</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>카드 결제 문자를 붙여넣으면 자동으로 거래를 입력하는 기능을 만들어줘.
+
+- 앞에서 만든 &#x27;결제 문자 붙여넣기&#x27; 칸에 카드 문자를 붙여넣으면 자동으로 폼이 채워지게 해줘.
+- 앱을 열었을 때 클립보드에 결제 문자가 있으면 상단에 &quot;복사한 결제 내역이 있어요&quot; 배너를 띄우고, [붙여넣기]를 누르면 그 칸에 넣어줘.
+- 문자에서 가맹점·금액·날짜를 자동으로 뽑아 입력 폼에 채워줘.
+- 국내 주요 카드사 문자 형식을 인식해줘.
+  (KB국민, 신한, 삼성, 현대, 롯데, 하나, 우리BC, 농협, 씨티, 카카오페이, 카카오뱅크, 토스뱅크 등)
+- 누적금액·잔액은 거래 금액으로 오인하지 않게 걸러줘.
+- 잘못 뽑히거나 빠진 값이 있으면 그 칸만 직접 고칠 수 있게 해줘.
+- 가맹점명으로 카테고리를 자동 추천해줘. (예: 스타벅스→식비, GS25→쇼핑)
+- 한 가맹점에 내가 카테고리를 한 번 골라주면, 그 선택을 기억해서
+  다음에 같은 가맹점이 들어오면 그 카테고리를 자동으로 채워줘.
+- 그래서 자주 가는 곳은 내가 확인만 하고 [저장]을 누르면 끝나게 해줘.
+
+새 데이터를 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.3</span> 내 카드 문자 학습시키기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>내가 자주 쓰는 카드 문자 형태야. 이 형태를 학습해서 정확히 파싱해줘.
+
+[내가 쓰는 카드 문자 붙여넣기]
+
+가맹점·금액·날짜를 어떻게 뽑는지 규칙으로 정리해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.4</span> CSV 일괄 가져오기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>CSV 파일로 과거 거래를 한 번에 가져오는 기능을 만들어줘.
+
+- 파일을 선택하거나 끌어다 놓으면 각 줄을 거래로 변환해줘.
+- 가져오기 전에 표로 미리 보여주고, 넣을 줄만 선택하게 해줘.
+- 열 이름은 date, merchant, amount, category, paymentMethod, flowType, memo를 쓸게.
+  (날짜·가맹점·금액·카테고리·결제수단·수입/지출 구분·메모 순서야.)</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.5</span> 날짜별 달력 보기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>오른쪽 내역 목록 위에 [목록] / [달력] 토글을 만들고, 달력 보기를 추가해줘. 달력이 오른쪽의 대부분을 차지하게 크게 만들어줘. 앱을 열면 달력이 기본으로 보이게 해줘. (목록이 아니라 달력이 먼저.)
+
+- 월 달력의 각 날짜에 그날의 지출·수입·저축을 함께 표시해줘. 지출은 빨강(예: -12,000원), 수입은 파랑(예: +100,000원), 저축도 구분되는 색으로.
+- 지출이 많은 날은 칸을 진한 색으로 칠해줘(히트맵).
+- 날짜를 누르면 그날의 거래를 지출·수입·저축으로 나눠 자세히 보여줘.
+- 지난 달로 넘겨서 과거 날짜도 볼 수 있게 해줘.
+- 금액은 &#x27;만&#x27; 단위로 줄이지 말고 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.6</span> 통계 탭 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>통계 탭을 추가해줘.
+
+보여줄 내용:
+- 카테고리별 지출 금액과 비중 (%)
+- 전월 대비 변화율 (늘었으면 빨간색, 줄었으면 파란색)
+- 최근 6개월 수입·지출·저축 트렌드 차트
+- 이번 달 수입 합계, 지출 합계, 저축 합계
+- 요일별 지출 (무슨 요일에 많이 쓰는지)
+- 지출을 고정비와 변동비로 나눠서 보기
+- 평소보다 유난히 많이 쓴 카테고리를 자동으로 짚어주기
+  (예: &quot;교육비가 최근 3개월 평균보다 43% 많아요&quot;)
+
+탭 형태로 기존 화면에 추가해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.7</span> 예산 관리 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>예산 관리 기능을 추가해줘.
+
+- 이번 달 전체 예산과 카테고리별 한도를 정할 수 있게 해줘.
+- 각 카테고리마다 쓴 금액 대비 한도를 진행 바로 보여줘.
+- 80%까지는 초록, 80~100%는 노랑, 넘으면 빨강으로 표시해줘(신호등).
+- 예산을 넘기면 홈 화면에서 먼저 알려줘.
+
+예산을 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.8</span> 고정지출 자동화</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>매달 반복되는 고정지출을 자동으로 기록하는 기능을 만들어줘.
+
+- 고정지출을 등록할 수 있게 해줘 (이름, 금액, 카테고리, 매달 며칠).
+- 등록한 고정지출은 매달 그 날짜에 거래로 자동 생성돼.
+- 잠시 멈추거나 다시 켤 수 있게 해줘.
+- 이번 달 나갈 고정지출을 미리 목록으로 볼 수 있게 해줘.
+
+고정지출을 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.9</span> 구독 관리 탭 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>구독 관리 탭을 추가해줘.
+
+기능:
+- 구독 서비스 등록 (이름, 금액, 결제일, 카테고리)
+- 카테고리 구분: AI서비스 / OTT / 통신·IT / 렌탈 / 쇼핑멤버십
+- 결제 방식 구분: 월납 / 연납 / 약정기간 있음 / 자동연장
+- 월 총액과 연간 환산 금액 표시
+- 카테고리별 비중 (%)
+- 이번 달 결제 예정 목록
+
+탭 형태로 기존 화면에 추가해줘.
+구독을 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.10</span> 가족 공유</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>가족이 함께 쓰는 기능을 만들어줘.
+
+- 설정 화면에 &#x27;가족 공유&#x27;를 만들어줘. 여기서 초대 코드(또는 초대 링크)를 만들 수 있게 해줘.
+- 배우자·가족은 그 코드를 입력하거나 링크를 눌러 같은 가계부에 들어와.
+- 설정 화면에 지금 함께 쓰는 구성원 목록을 보여줘. 누가 들어왔는지(예: 나 · 아내), 참여 상태를 확인할 수 있게 해줘.
+- 한 사람이 거래를 입력하면 다른 사람 화면에도 실시간으로 반영돼.
+- 각 거래에 누가 입력했는지(나/배우자/공동) 표시해줘.
+- 예산도 함께 보고 관리할 수 있게 해줘.
+
+수파베이스의 실시간(Realtime) 기능을 사용해줘.
+가족 공유에 필요한 테이블·설정 SQL도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.11</span> 에러 메시지 수정 요청</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>이런 에러가 떴어:
+[에러 메시지 붙여넣기]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.12</span> 로그인·보안 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>로그인 기능을 추가해줘.
+- 수파베이스 Auth로 이메일 로그인
+- 로그인한 사용자만 데이터를 보고 쓸 수 있게 RLS 정책도 함께 수정해줘.
+- 가족 공유(초대한 가족이 같은 가계부를 보는 것)는 깨지지 않게 유지해줘</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">2.13</span> 깃허브 업로드</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>깃허브에 올려줘.
+저장소 주소: [복사한 깃허브 저장소 URL]</code></pre></div>
+</details>
+</section>
+<section>
+<h2>3장 자산·포트폴리오 관리 앱 <span class="cnt">17개</span></h2>
+<details class="p">
+<summary><span class="num">3.1</span> 자산 입력 앱 생성</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>자산·포트폴리오 관리 앱을 만들어줘. Next.js로 만들어줘.
+
+지금은 전체를 다 만들지 말고, 앱의 뼈대와 첫 번째 탭(자산 입력)까지만 만들어줘.
+
+[전체 구조]
+- 왼쪽에 세로 사이드바 네비게이션을 둬. 맨 위에 앱 로고와 이름, 그 아래 메뉴를 둬.
+  지금은 &#x27;자산 입력&#x27; 하나만 넣고, 앞으로 탭을 하나씩 추가할 거야.
+- 오른쪽은 넓은 콘텐츠 영역이야. 사이드바에서 고른 메뉴 화면이 여기 뜨게 해줘.
+
+[디자인 — 이 느낌으로 만들어줘]
+- 전문 금융 대시보드 느낌으로 차분하고 신뢰감 있게.
+- 배경은 아주 연한 회색, 내용은 흰색 카드에 담아줘. 카드는 모서리를 둥글게(12px)
+  하고 옅은 그림자로 살짝 떠 보이게.
+- 각 화면 맨 위에 짙은 남색(딥네이비) 그라데이션 헤더 띠를 둬. 그 안에 화면 제목을
+  굵고 크게, 아래에 한 줄 부제, 오른쪽에 주요 버튼을 배치해.
+- 핵심 숫자(순자산 등)는 아주 크고 굵게. 오르면 초록, 내리면 빨강으로.
+- 여백을 넉넉히 주고, 글자는 한글이 또렷한 산세리프로. 사이드바에서 지금 보는
+  메뉴는 배경으로 강조해줘.
+
+[첫 번째 탭: 자산 입력]
+- &#x27;자산 입력&#x27; 화면을 콘텐츠 영역에 만들어, 자산을 종류별로 등록할 수 있게 해줘.
+
+[자산 종류]
+- 예금·적금 (기관명, 금액, 만기일)
+- 주식·펀드·코인 (종목명, 수량, 매입 단가)
+- 부동산·전세보증금 (시세 또는 보증금, 대출 잔액)
+- 연금·청약 (기관명, 현재 평가액)
+- 차량 (구매가, 구매일)
+- 부채 (대출·카드 할부: 이름, 잔액, 금리)
+
+[공통]
+- 각 항목에 소유자(나 / 배우자 / 공동)를 정할 수 있게 해줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.
+- 데이터베이스는 수파베이스를 사용하고, 필요한 테이블 SQL도 알려줘.
+
+수파베이스 URL: [복사한 API URL]
+수파베이스 Publishable key: [복사한 Publishable key]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.2</span> 순자산 현황</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;순자산&#x27; 탭을 추가하고, 자산 현황 화면을 만들어줘.
+
+- 전체 자산에서 부채를 뺀 순자산을 맨 위에 큼직하게 보여줘.
+- 그 아래 자산 종류별 비중을 원형 그래프로 보여줘.
+- 소유자별(나 / 배우자 / 공동) 순자산을 나눠서 보여줘.
+- 월별 순자산 추이를 선 그래프로 보여줘.
+- 모든 금액은 천단위 콤마를 넣은 원 단위로 표시해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.3</span> 재무 건전성 점검</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;재무 건전성&#x27; 탭을 추가해줘. 자산·부채는 이 앱 데이터를 쓰고,
+월 수입·지출·저축은 가계부 앱 수파베이스에 연결해 최근 3개월 평균으로
+계산해줘.
+
+가계부 수파베이스 URL: [가계부 앱 수파베이스 URL]
+가계부 Publishable key: [가계부 앱 Publishable key]
+
+- 네 가지 지표를 카드로 보여줘. 각 카드에 쉬운 이름과 값, 그리고
+  초록·노랑·빨강 신호등을 붙여줘:
+  1) 저축률 = 월 저축·투자액 ÷ 월 수입
+     (20% 이상 초록 / 10~20% 노랑 / 10% 미만 빨강)
+  2) 비상금 개월 수 = 현금성 자산(예금·현금) ÷ 월 지출
+     (6개월 이상 초록 / 3~6개월 노랑 / 3개월 미만 빨강)
+  3) 부채비율 = 총부채 ÷ 총자산
+     (40% 미만 초록 / 40~60% 노랑 / 60% 이상 빨강)
+  4) 유동성 비율 = 현금성 자산 ÷ 총자산
+     (30% 이상 초록 / 10~30% 노랑 / 10% 미만 빨강)
+- 네 지표를 묶어 &#x27;금융 건강 점수&#x27;를 0~100점으로 한 줄 요약해줘.
+- 가장 약한(빨강 먼저, 그다음 노랑) 지표를 골라 &quot;지금 먼저 챙길 것&quot;을
+  한 문장으로 알려줘.
+- 어려운 용어 대신 쉬운 이름을 쓰고, 각 지표 옆에 한 줄 설명을 달아줘.
+- 자산·부채나 가계부 거래가 바뀌면 이 점수도 자동으로 다시 계산해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.4</span> 대출·상환 계획</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;대출&#x27; 탭을 추가해줘. 대출 상환 계획 화면을 만들어줘.
+
+- 대출을 등록할 수 있게 해줘 (이름, 잔액, 금리, 상환 방식, 남은 개월 수).
+- 상환 방식은 원리금균등 / 원금균등 / 만기일시로 구분해줘.
+- 매달 나가는 상환액을 원금과 이자로 나눠서 보여줘.
+- 만기까지 낼 총 이자를 보여줘.
+- 중도상환 금액을 넣으면, 줄어드는 총 이자와 단축되는 기간을 계산해줘.
+- 상환 스케줄에 따라 매달 원금·이자·잔여 대출 잔액이 자동으로 갱신해줘.
+  (매달 손으로 고치지 않아도 날짜가 지나면 반영되게)
+- 대출 잔액이 줄면 순자산에 자동으로 반영해줘. 주택담보대출처럼 특정 자산에
+  묶인 대출은 그 자산(부동산)의 순가치에 연동해줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.
+
+대출·상환 스케줄을 저장할 테이블이 필요하면 SQL도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.5</span> 포트폴리오 입력</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;포트폴리오&#x27; 탭을 추가해줘. 투자 포트폴리오 화면을 만들어줘.
+
+- 종목을 등록할 수 있게 해줘 (종목명 또는 종목코드, 수량, 매입 단가, 매입일).
+- 같은 종목을 여러 번 사면 평균 매입 단가를 자동으로 계산해줘.
+- 주식 / 펀드 / 코인 / 외화 종류를 구분해줘.
+- 종목별 매입 금액(수량 × 평균 매입 단가)과 전체 포트폴리오에서의 비중을 보여줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.
+
+포트폴리오를 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.6</span> 시세 자동 갱신</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>포트폴리오 종목의 현재 시세를 자동으로 가져와 평가액을 갱신해줘.
+
+- 주식·코인·환율은 무료로 쓸 수 있는 시세 소스에서 가져와줘.
+- 실시간이 아니어도 되니, 하루 한두 번 갱신되는 방식이면 돼.
+- 종목마다 매입가 대비 현재 평가액을 보여줘.
+- 달러 자산은 환율을 반영해 원화 평가액으로도 보여줘.
+- 시세를 못 가져오는 종목은 마지막으로 받은 값을 유지하고, 그 옆에
+  마지막 갱신 시각을 표시해줘.
+- 시세가 갱신되면 순자산과 포트폴리오 비중도 자동으로 다시 계산해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.7</span> 손익·수익률</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>&#x27;포트폴리오&#x27; 탭에 손익·수익률을 함께 보여줘.
+
+- 종목마다 평가손익(현재 평가액 − 매입 금액)을 금액과 수익률(%)로 보여줘.
+- 이익은 초록, 손실은 빨강으로 색을 구분해줘. (앞에서 만든 화면들과 같은 기준)
+- 포트폴리오 전체 합계 손익과 전체 수익률도 맨 위에 보여줘.
+- 배당을 받은 종목은 배당금을 따로 기록하고, 손익에 더해서 보여줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.8</span> 투자성향 분석</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;투자성향&#x27; 탭을 추가해줘. 투자성향 분석 기능을 만들어줘.
+
+- 투자성향을 파악하는 질문을 5~7개 넣어줘 (투자 기간, 손실을 견디는 정도,
+  기대 수익, 투자 경험 등). 객관식으로 답하게 해줘.
+- 답을 합산해 성향을 판정해줘: 안정형 / 안정추구형 / 위험중립형 /
+  적극투자형 / 공격투자형.
+- 성향에 맞는 권장 자산 배분(주식 / 채권 / 현금 비율)을 제안해줘.
+- 특정 종목 추천은 하지 말고, 자산군 배분 수준까지만 안내해줘.
+- &#x27;이 배분을 목표로 저장&#x27; 버튼을 넣어서, 리밸런싱 화면의 목표 비중으로 넘겨줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.9</span> 리밸런싱 제언</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;리밸런싱&#x27; 탭을 추가해줘. 포트폴리오 리밸런싱을 도와줘.
+
+- 자산군별 목표 비중을 내가 정할 수 있게 해줘 (예: 주식 60 / 채권 20 / 현금 20).
+- 현재 비중과 목표 비중을 나란히 막대로 보여줘.
+- 목표와의 차이(초과·부족)를 금액과 퍼센트로 보여줘.
+- 어느 자산군을 얼마나 줄이고 늘리면 목표에 맞는지 문장으로 제안해줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.10</span> 생애 설계 입력값 연동</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;생애 설계&#x27; 탭을 추가해줘. 생애 재무 설계 화면을 만들고, 입력값은 최대한 기존 데이터에서 끌어와줘.
+
+- 자산 앱의 현재 순자산과 자산 구성을 불러와 기본값으로 채워줘.
+- 재무 건전성에서 연결한 가계부의 최근 6개월 평균 월 지출·수입·저축액을
+  불러와 채워줘.
+- 내가 직접 넣는 값은 은퇴 나이, 은퇴 후 예상 월 지출, 연금 수령 시작 나이,
+  예상 연 수익률로 최소화해줘.
+- 끌어온 값과 직접 넣는 값을 한 화면에서 확인·수정할 수 있게 해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.11</span> 성장 곡선·핵심 지표</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>생애 재무 설계에 순자산 성장 곡선과 핵심 지표를 그려줘.
+
+- 지금부터 기대 수명(예: 만 85세)까지 순자산 곡선을 그려줘.
+- 곡선에 은퇴 시점과 연금 시작 시점을 세로선으로 표시해줘.
+- 요약 지표 네 가지를 카드로 보여줘:
+  은퇴 시점 순자산 / 경제적 자유 시점(패시브 소득 ≥ 지출) /
+  고갈 위험(기대 수명 전에 자산이 바닥나는지) / 최종 순자산.
+- 금액은 억·천단위 콤마로 읽기 쉽게 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.12</span> 시나리오 비교</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>생애 재무 설계에 시나리오 비교를 넣어줘.
+
+- 시나리오 버튼: 은퇴 5년 앞당기기 / 자녀 1명 추가 / 경제 위기 발생 / 절약.
+- 버튼을 누르면 그 조건으로 곡선과 네 지표를 즉시 다시 계산해줘.
+- 기본 시나리오와 선택한 시나리오를 곡선에서 겹쳐 비교할 수 있게 해줘.
+- 직접 수정 버튼을 눌러 은퇴 나이·저축액 등을 손으로 바꿔볼 수도 있게 해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.13</span> 생애 설계 월 1회 자동 갱신</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>생애 재무 설계를 자동으로 갱신해줘.
+
+- 매달 초에 한 번 최신 자산 데이터로 생애 설계를 다시 계산해줘.
+- 최신 순자산과 가계부 최근 지출·수입을 다시 끌어와 곡선과 지표를 갱신해줘.
+- 마지막으로 갱신된 날짜를 화면에 표시해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.14</span> 자산 목표·위시리스트</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;목표·위시리스트&#x27; 탭을 추가해줘. 자산 목표와 위시리스트, 알림 기능을 만들어줘.
+
+- 목표를 등록할 수 있게 해줘 (이름, 목표 금액, 목표일, 종류: 자산 목표 / 위시리스트).
+  위시리스트 예: 유럽 여행 500만 원, 명품 가방 300만 원.
+- 목표마다 연결할 적금을 고를 수 있게 해줘. 자산관리에 등록된 그 적금 잔액이
+  늘면 목표 진행률도 자동으로 올라가게 해줘.
+- 목표마다 현재 도달률(%)을 막대로 보여주고, 지금 저축 속도면 언제 완료되는지
+  예상 날짜를 보여줘.
+- 부족하면 매달 얼마를 더 넣어야 목표일에 닿는지 계산해줘.
+- 다음 상황에서 화면 위쪽에 알림을 띄워줘:
+  목표 도달률 90% 도달 / 순자산이 한 달 새 큰 폭으로 변동 /
+  포트폴리오 비중이 목표에서 크게 벗어남.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.
+
+목표·위시리스트를 저장할 테이블이 필요하면 SQL도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.15</span> 월말 자산 리포트</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>사이드바에 &#x27;월말 리포트&#x27; 탭을 추가해줘. 월말 자산 리포트 화면을 만들어줘.
+
+- 이번 달 순자산이 지난달 대비 얼마 늘거나 줄었는지 금액과 퍼센트로 보여줘.
+- 그 변화를 요인별로 나눠줘: 새로 저축·투자한 돈 / 투자 평가손익 /
+  환율 변동 / 부채 상환.
+- 한 화면에 이번 달 요약을 정리해줘.
+- 월별로 순자산과 요인을 비교해 볼 수 있게 해줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.16</span> 가족 공유</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>가족이 함께 쓰는 기능을 만들어줘.
+
+- 설정 화면에 &#x27;가족 공유&#x27;를 만들고, 초대 코드(또는 초대 링크)를 만들 수 있게 해줘.
+- 배우자·가족은 그 코드로 같은 자산 공간에 들어와.
+- 설정 화면에 지금 함께 쓰는 구성원 목록과 참여 상태를 보여줘.
+- 한 사람이 자산을 등록·수정하면 다른 사람 화면에도 반영돼.
+- 소유자별(나 / 배우자 / 공동) 순자산은 그대로 나눠 볼 수 있게 유지해줘.
+
+수파베이스의 실시간(Realtime) 기능을 사용해줘.
+
+가족 공유에 필요한 테이블·설정 SQL도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">3.17</span> 로그인·보안 붙이기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>이 앱에 로그인을 붙여줘.
+
+- 이메일로 회원가입·로그인하게 해줘. 수파베이스 인증(Authentication)을 사용해줘.
+- 로그인한 사용자와 초대받은 가족만 자산 데이터를 볼 수 있게 해줘.
+- 로그인 안 한 사람은 데이터에 접근하지 못하게 막아줘.
+- 데이터베이스에도 RLS 정책을 걸어서, 본인과 초대받은 가족만 데이터를 읽고 쓸 수 있게 잠가줘.</code></pre></div>
+</details>
+</section>
+<section>
+<h2>4장 건강관리 앱 <span class="cnt">12개</span></h2>
+<details class="p">
+<summary><span class="num">4.1</span> 건강관리 앱 생성</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>건강관리 앱을 만들어줘.
+
+기능:
+- 오늘 식단 기록 (음식명, 칼로리, 영양소)
+- 음식 사진을 찍으면 AI가 칼로리와 영양소를 자동 분석
+- 음식 이름을 텍스트로 입력해도 AI가 칼로리 추정
+- 운동 기록 (러닝/수영/자전거/근력/하이킹, 시간과 칼로리)
+- 수분(물), 커피, 수면 시간, 체중 기록
+- 하루 칼로리 목표 대비 섭취량 표시
+- 날짜별 히스토리 조회
+
+데이터는 수파베이스에 저장해줘.
+필요한 데이터베이스 테이블을 만드는 SQL도 함께 알려줘.
+수파베이스 URL: [복사한 API URL]
+수파베이스 anon key: [복사한 Publishable key]
+
+AI 음식 분석은 제미나이 API를 사용해줘.
+제미나이 API key: [복사한 API 키]
+
+Next.js로 만들어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.2</span> 음성으로 식단 기록</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>식단 입력에 &#x27;음성 AI&#x27; 탭을 추가해줘.
+
+- 마이크 버튼을 누르면 한국어 음성 인식으로 말을 텍스트로 바꿔줘.
+  (브라우저에 내장된 음성 인식을 쓰고, 결과는 한 번만 받아줘.)
+- 말이 끝나면 그 텍스트를 지금 있는 텍스트 분석 기능에 그대로 넘겨
+  칼로리·영양소를 계산하게 해줘.
+- 듣는 중에는 버튼이 빨갛게 바뀌고 &#x27;듣는 중&#x27;이라고 표시해줘.
+- 음성 인식을 지원하지 않는 브라우저면 안내 문구를 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.3</span> 먹는 순서·양 추천</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>음식 분석 결과에 &#x27;먹는 순서&#x27;와 &#x27;양 조절 팁&#x27;을 추가해줘.
+사진 분석과 텍스트 분석 모두에 넣어줘.
+
+- 먹는 순서: 혈당이 덜 오르게 &#x27;채소·단백질 → 탄수화물&#x27; 원칙으로,
+  실제 입력된 음식을 2~4단계로 나눠줘. 각 항목은 &quot;무엇을(왜)&quot; 형태로
+  짧게 (예: &quot;채소 반찬 (혈당 완만하게)&quot;). 음식이 하나뿐이면 생략.
+- 양 조절 팁: 줄이거나 늘리면 좋을 것을 한 문장으로
+  (예: &quot;밥은 2/3만 드시면 200kcal 절약돼요&quot;). 없으면 생략.
+- 먹는 순서는 번호를 붙인 카드로, 양 조절 팁은 그 아래 한 줄로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.4</span> 러닝 기록 탭 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>러닝 전용 기록 탭을 추가해줘.
+
+입력 항목:
+- 날짜, 거리(km), 소요 시간 → 페이스(분/km) 자동 계산
+- 코스 메모 (동네 한 바퀴, 한강 코스 등)
+- 날씨 선택 (맑음 / 흐림 / 비)
+
+통계 화면:
+- 이번 달 누적 거리 (예: 47.3km / 목표 100km 진행 바)
+- 이번 주 평균 페이스
+- 최근 5회 페이스 트렌드 차트 (빨라지는지 느려지는지)
+- 월별 마일리지 히스토리 (막대 그래프)
+
+기존 운동 기록과 분리해서 러닝 전용 탭으로 만들어줘.
+러닝 기록을 저장할 테이블이 필요하면 SQL을 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.5</span> 운동 칼로리 자동 계산</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>운동 시간을 입력하면 칼로리가 자동으로 계산해줘.
+직접 입력도 가능하고, 입력 안 하면 운동 종류와 시간으로 자동 계산해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.6</span> 연속 기록 배지</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>며칠 연속으로 기록했는지 표시해줘.
+매일 기록하면 불꽃 이모지가 유지되는 스트릭 배지를 만들어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.7</span> 주간·월간 요약</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>히스토리 페이지에 일별 목록 말고,
+주간 합계와 평균, 월간 합계와 평균도 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.8</span> 칼로리 뱅크</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>칼로리 뱅크 기능을 만들어줘.
+
+- 하루 목표보다 덜 먹은 칼로리와 운동으로 소모한 칼로리를 &#x27;저축&#x27;으로 모아줘.
+  (지난 날짜만 계산하고, 식사를 기록하지 않은 날은 빼지 마.)
+- 오늘 목표를 초과하면 &#x27;출금 예정 −○○kcal&#x27;로 미리 보여줘.
+- 뱅크 잔고를 홈 화면 배너에 큰 숫자로 보여줘. 저축은 초록, 초과는 빨강으로.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.9</span> TDEE로 목표 칼로리 자동 설정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>TDEE(하루 총 소비 칼로리) 계산기를 만들어줘.
+
+- 키·나이·성별·체중·활동 수준(5단계: 거의 안 움직임 ~ 매우 활발)을 입력받아,
+  기초대사량(BMR)과 TDEE를 계산해줘. (미플린-세인트 지어 공식)
+- 결과에서 &#x27;유지 목표(TDEE)&#x27;와 &#x27;감량 목표(TDEE−400)&#x27; 버튼을 눌러
+  하루 칼로리 목표에 자동으로 적용해줘.
+- 칼로리 목표가 바뀌면 단백질·탄수·지방 목표도 비율에 맞춰 자동 조정해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.10</span> 사진 분석 오류 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>음식 사진 분석이 계속 실패해. 에러 로그 확인하고 수정해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.11</span> 날짜(타임존) 오류 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>날짜가 이상하게 저장되는 것 같아. 한국 시간 기준으로 날짜가 제대로 저장되도록 수정해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">4.12</span> 버셀 빌드 오류 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>버셀 빌드가 이 로그로 실패했어. 고쳐줘.
+[복사한 빌드 로그]</code></pre></div>
+</details>
+</section>
+<section>
+<h2>5장 블로그 자동화 앱 <span class="cnt">6개</span></h2>
+<details class="p">
+<summary><span class="num">5.1</span> 블로그 자동화 앱 생성</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>네이버 블로그 글 작성 도우미 앱을 만들어줘.
+
+기능:
+- 카테고리 선택 (맛집/카페, 여행, 뷰티/스킨케어, 제품리뷰/언박싱, 아기용품/유아정보)
+- 카테고리별 필수 입력 항목 안내 (예: 맛집 → 식당명, 위치, 가격대, 방문일)
+- 자유 메모 입력칸
+- 입력 내용을 바탕으로 AI가 SEO 최적화 블로그 글 자동 생성
+- 카테고리별 목표 글자수 (맛집 2,800자, 여행 3,700자, 뷰티 4,000자, 제품리뷰 3,500자, 아기용품 3,000자)
+- 각 섹션에 어떤 사진을 찍어야 할지 촬영 가이드 자동 생성
+- 글자수 · 키워드 밀도 실시간 표시
+- [재생성] 버튼 (같은 입력으로 글을 다시 생성)
+- 일일 생성 횟수 표시 (0/1,500 형식, 자정 리셋)
+- 생성된 글 복사 버튼
+
+AI는 제미나이 API를 사용해줘. 키를 코드에 넣지 말고, 앱 안에 &quot;AI 연결 설정&quot; 창을 만들어 사용자가 키를 직접 붙여넣고 브라우저에만 저장하게 해줘(외부로 전송 금지).
+
+프레임워크 없이 순수 HTML/CSS/JavaScript로 만들어줘.
+버셀에 올릴 수 있게 vercel.json도 만들어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">5.2</span> 네이버 SEO 규칙 적용</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>블로그 글을 생성할 때 네이버 SEO 규칙을 적용해줘.
+
+제목:
+- 핵심 키워드를 제목 앞쪽에 배치
+- 25~35자 사이
+- 예: &quot;강남 스시 맛집 추천 — 직접 가본 오마카세 솔직 후기&quot;
+
+본문 구조:
+- 첫 문단 100자 안에 핵심 키워드 재등장
+- H2 소제목에 연관 키워드 자연스럽게 배치
+- 글 마지막에 네이버 태그 추천 10개 자동 생성
+
+키워드 밀도는 2~3%로 유지. 억지로 반복하지 말 것.
+
+생성된 글을 위 규칙으로 자체 채점하는 [글 분석] 기능도 만들어줘.
+0~100점과 항목별 점수, 부족한 부분을 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">5.3</span> 블로그 어조 유지</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>글 생성 시 이 블로그 URL의 말투와 어조를 그대로 유지해줘: [블로그 주소]
+구어체, 친근한 표현, 줄임말 패턴을 분석해서 따라줘.
+SEO 규칙은 지키되, 이 블로그 글처럼 자연스럽게 읽혀야 해.
+AI가 쓴 것처럼 딱딱하거나 나열식이면 안 돼.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">5.4</span> 카테고리 추가</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>&#x27;홈카페/베이킹&#x27; 카테고리를 추가해줘.
+목표 글자수는 2,500자, 필수 입력 항목은 레시피명, 재료, 난이도야.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">5.5</span> 잘린 글 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>글이 중간에 잘려서 완성이 안 돼. 최대 출력 토큰 수를 늘려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">5.6</span> JSON 파싱 방식 변경</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>AI 응답을 파싱할 때 JSON 오류가 나.
+JSON 대신 ##OPENING##, ##BODY##, ##CLOSING## 같은 구분자 방식으로 파싱 방법을 바꿔줘.</code></pre></div>
+</details>
+</section>
+<section>
+<h2>6장 개인 비서 시스템 <span class="cnt">17개</span></h2>
+<details class="p">
+<summary><span class="num">6.1</span> 아침 브리핑 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>텔레그램으로 매일 아침 브리핑을 보내는 파이썬 스크립트를 만들어줘.
+
+텔레그램 설정:
+- 봇 토큰: [발급받은 봇 토큰]
+- 채팅 ID: [확인한 채팅 ID]
+
+브리핑 내용:
+- 오늘 날씨: 네이버 날씨에서 [내 지역] 날씨를 크롤링해줘.
+  현재 기온, 최고·최저, 시간대별 비 예보를 담아줘.
+- 경제 뉴스 3건: Google News RSS에서 가져와줘.
+- 내용이 없어도 매일 보내줘.
+
+메시지 형식:
+- 텔레그램 모바일에서 보기 좋게, 한 줄은 짧게 끊어줘.
+- 섹션마다 이모지로 구분해줘 (🌤 날씨, 📰 뉴스).
+
+AI 요약이 필요한 부분은 로컬 올라마의 gemma3 모델을 사용해줘.
+실행에 필요한 패키지 설치 명령어도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.2</span> AI 뉴스 브리핑 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>아침 브리핑에 AI 뉴스 섹션을 추가해줘.
+
+- 긱뉴스 RSS(https://news.hada.io/rss/news)에서 최근 글을 가져와줘.
+- 그중 AI·LLM·바이브코딩 관련 글만 골라줘.
+- 올라마 gemma3로 글마다 한 줄 요약을 만들어줘.
+- 제목 + 한 줄 요약 + 링크 형태로 3건까지만 보여줘 (🤖 이모지로 구분).
+- 관련 글이 없는 날은 이 섹션을 빼줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.3</span> 건강 알림 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>건강 목표 미달 알림을 추가해줘.
+
+- 건강관리 앱의 수파베이스에서 오늘 데이터를 읽어줘.
+  URL: [건강관리 앱 수파베이스 URL]
+  키: [건강관리 앱 Publishable key]
+- 확인할 목표: 칼로리 2,000kcal의 50% 미달 / 단백질 120g 미달 /
+  운동 기록 없음 / 수분 2,000ml 미달.
+- 하나라도 해당하면 텔레그램으로 보내줘. 모두 충족하면 아무것도 보내지 마.
+- 어떤 목표가 얼마나 부족한지 숫자로 알려줘.
+- 이모지로 구분해줘 (🔴 위험, ⚠️ 주의, ✅ 정상).</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.4</span> RLS로 막힌 데이터 읽기 해결</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>건강 알림이 데이터를 못 읽어서 전부 0으로 나와. RLS 때문인 것 같아.
+건강관리 앱을 secret 키로 읽도록 바꿔줘.
+- secret 키는 [Project Settings] → [API Keys]에서 복사해 환경변수로 넣을게.
+- 코드에 키를 직접 박지 말고 환경변수에서 읽어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.5</span> 저녁 통합 브리핑 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>매일 밤 10시에 보낼 저녁 통합 브리핑을 추가해줘.
+
+- 건강 요약: 오늘 체중, 수면, 수분, 칼로리·단백질·탄수화물·지방.
+  (건강관리 앱 수파베이스에서 읽어줘. 이미 연결돼 있어.)
+- 가계부 현황: 이번 달 수입·지출·잔여 예산.
+  가계부 앱 수파베이스에서 읽어줘.
+  URL: [가계부 앱 수파베이스 URL]
+  키: [가계부 앱 Publishable key]
+- 두 내용을 하나의 메시지로 합쳐서 보내줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.6</span> 주간 리포트 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>주간 리포트 두 개를 추가해줘.
+
+1. 주간 건강 리포트 (일요일 22:00)
+   - 지난 7일 체중 변화, 수면 평균, 운동 일수와 종류
+   - 칼로리 적자/흑자 요약
+   - 단백질이 부족했다면 단백질 많은 음식 TOP 3 추천
+
+2. 주간 가계부 리포트 (월요일 08:30)
+   - 지난주 카테고리별 지출
+   - 일별 지출 목록
+   - 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.7</span> 월간 통합 리포트 만들기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>매월 1일 08:30에 보낼 지난달 통합 리포트를 추가해줘.
+
+- 가계부: 지난달 수입·지출 합계, 전월 대비 증감, 지출 TOP 3 카테고리.
+- 건강: 지난달 체중 변화, 운동한 날 수, 평균 수면.
+- (자산 앱을 만들었다면) 자산: 지난달 순자산 변화.
+  URL: [자산 앱 수파베이스 URL]
+  키: [자산 앱 Publishable key]
+- 한 메시지로 묶고, 맨 위에 지난달을 한 문장으로 평가해줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.8</span> 자동 발송 시간 예약하기 (맥)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>지금까지 만든 알림들이 정해진 시간에 자동 실행되게 crontab에 등록해줘.
+
+- 맥의 launchd(LaunchAgents) 말고 crontab(cron)을 써줘. 등록한 뒤 `crontab -l`로 확인할 수 있게 해줘.
+- 아침 브리핑 08:00 (AI 뉴스 포함)
+- 건강 알림은 12:00~21:00 사이 3시간마다
+- 저녁 통합 브리핑 22:00
+- 주간 건강 리포트 일요일 22:00, 주간 가계부 리포트 월요일 08:30
+- 월간 통합 리포트 매월 1일 08:30</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.9</span> 자동 발송 시간 예약하기 (윈도우)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>나는 윈도우를 써. 지금까지 만든 알림들이 정해진 시간에 자동 실행되게 윈도우 작업 스케줄러에 등록해줘.
+
+- briefing.py를 실행하는 배치 파일(.bat)을 만들어줘.
+- 아래 시간표로 작업 스케줄러에 등록해줘.
+  - 아침 브리핑 08:00 (AI 뉴스 포함)
+  - 건강 알림은 12:00~21:00 사이 3시간마다
+  - 저녁 통합 브리핑 22:00
+  - 주간 건강 리포트 일요일 22:00, 주간 가계부 리포트 월요일 08:30
+  - 월간 통합 리포트 매월 1일 08:30
+- 등록이 끝나면 작업 스케줄러에서 어떻게 확인하는지도 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.10</span> 애플 캘린더 연동</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>애플 캘린더를 아침 브리핑에 연동해줘.
+
+- 공개 캘린더 주소: [복사한 webcal 주소]
+- 오늘 일정을 시간 순서로 보여줘.
+- 일정이 없는 날은 &quot;오늘 일정 없음&quot;으로 표시해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.11</span> 구글 캘린더 연동</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>credentials.json 파일이 폴더에 있어.
+아침 브리핑에 오늘 구글 캘린더 일정도 추가해줘.
+일정이 없는 날은 &quot;오늘 일정 없음&quot;으로 표시해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.12</span> 날씨 변동 알림 기능 추가 요청</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>날씨가 갑자기 바뀔 때만 알려줘.
+
+- 30분마다 네이버 날씨의 시간대별 예보를 확인해줘.
+- 비 올 확률이 60% 이상이 되거나, 기온이 6시간 안에 5도 이상 변할 때만
+  텔레그램으로 보내줘.
+- 이미 알린 내용은 다시 보내지 마.
+- 30분마다 자동 실행하게 cron(윈도우는 작업 스케줄러)에도 등록해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.13</span> 구독 점검 알림</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>매월 1일 09:00에 구독 점검 알림을 추가해줘.
+
+- 가계부 앱 수파베이스의 구독 데이터를 읽어줘. (이미 연결돼 있어.)
+- 이번 달 결제될 구독 목록과 총액을 보여줘.
+- 금액은 천단위 콤마를 넣은 원 단위로 보여줘.
+- cron(윈도우는 작업 스케줄러)에도 등록해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.14</span> 텔레그램 미수신 디버그</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>python3 briefing.py 를 실행했는데 텔레그램에 아무것도 안 와.
+에러 로그가 없어서 원인을 모르겠어. 디버그 모드로 실행할 수 있게 해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.15</span> cron 경로 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>cron으로 자동 실행할 때 &quot;ModuleNotFoundError&quot; 에러가 나.
+스크립트의 python3 명령을 절대 경로로 바꿔줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.16</span> 메시지 줄 길이 조정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>텔레그램 모바일에서 메시지 줄이 넘어가서 깨져 보여.
+한 줄을 28자 이내로 끊어줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">6.17</span> 수파베이스 조회 오류 수정</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>이런 에러가 났어: [에러 메시지]
+수파베이스 테이블 구조를 확인하고 쿼리를 수정해줘.</code></pre></div>
+</details>
+</section>
+<section>
+<h2>7장 막혔을 때 펼치는 책 <span class="cnt">14개</span></h2>
+<details class="p">
+<summary><span class="num">7.1</span> 에러 메시지 그대로 보내기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>이런 에러가 났어:
+[에러 메시지 붙여넣기]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.2</span> 상황 정리해서 다시 묻기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>[앱 이름]을 만들고 있는데 이런 문제가 생겼어.
+증상: [무엇이 안 되는지]
+에러: [에러 메시지]
+지금까지 시도한 것: [해본 것]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.3</span> 말투 바꾸기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>AI가 쓴 글이 너무 딱딱해. 말투를 좀 더 친근하게 바꿔줘.
+&#x27;~합니다&#x27; 보다 &#x27;~해요&#x27; 체로, 너무 격식 없이도 말고.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.4</span> 디자인 참고 화면 보내기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>&quot;이 앱처럼 깔끔하게 바꿔줘.&quot; [스크린샷 첨부]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.5</span> 현재 상태 정리해서 이어가기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>[앱 이름] 작업 중이야. 현재 상태를 정리할게.
+
+완료된 것:
+- 거래 입력 기능 (완성)
+- 월별 통계 화면 (완성)
+
+지금 하고 싶은 것:
+- 카테고리별 파이 차트 추가
+
+추가할 때 기존 디자인 스타일(보라색 계열, 라운드 카드)은 유지해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.6</span> AI 기능 실패 원인 확인하기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>AI 분석 기능이 계속 실패해. 에러 로그를 콘솔에 출력하게 해줘.
+어떤 에러인지 보고 싶어.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.7</span> 한국 시간 기준으로 맞추기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>날짜가 이상하게 저장돼. 한국 시간(KST) 기준으로
+오늘 날짜를 제대로 저장하고 조회하게 수정해줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.8</span> 무료 한도 초과 대응하기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>버셀 무료 한도가 찬 것 같아.
+현재 상황에서 어떻게 대응하면 좋을지 알려줘.</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.9</span> cron 절대 경로로 고치기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>cron으로 자동 실행되게 설정했는데 동작하지 않아.
+스크립트에서 사용하는 명령어를 절대 경로로 바꿔줘.
+터미널에서 &quot;which python3&quot;을 실행하면 나오는 경로야: [경로]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.10</span> 작업 스케줄러 절대 경로로 고치기 (윈도우 사용자)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>작업 스케줄러로 자동 실행되게 설정했는데 동작하지 않아.
+스크립트에서 사용하는 명령어를 절대 경로로 바꿔줘.
+터미널에서 &quot;where.exe python&quot;을 실행하면 나오는 경로야: [경로]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.11</span> 쓰면서 떠오른 기능 추가하기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>이 앱 쓰다 보니까 이런 기능이 있으면 좋겠어:
+[기능 설명]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.12</span> 수정한 앱 다시 올리기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>깃허브에 올려줘.
+저장소 주소: [기존 저장소 URL]</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.13</span> 하던 작업 이어서 하기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>화면이 예전이랑 달라진 것 같아.
+예전에 만들던 가계부 앱 작업을 이어서 하고 싶어.
+어디서 시작하면 돼?</code></pre></div>
+</details>
+<details class="p">
+<summary><span class="num">7.14</span> 지금 버전의 명령어 확인하기</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>npm run dev 말고 다른 명령어를 써야 하는 것 같아.
+지금 버전에서 로컬 서버를 켜는 명령어가 뭐야?</code></pre></div>
+</details>
+</section>
+<footer>
+화면이나 도구가 바뀌면 이 페이지가 먼저 업데이트됩니다. · 『비전공자를 위한 바이브 코딩 with 클로드 코드』 (위키북스)
+</footer>
+</main>
+<script>
+function copyCode(btn){
+  const code=btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='복사됨!';
+    setTimeout(()=>btn.textContent='복사',1500);
+  });
+}
+function filterItems(q){
+  q=q.trim().toLowerCase();
+  document.querySelectorAll('details.p').forEach(el=>{
+    el.style.display=(!q||el.innerText.toLowerCase().includes(q))?'':'none';
+  });
+  document.querySelectorAll('section').forEach(s=>{
+    const any=[...s.querySelectorAll('details.p')].some(el=>el.style.display!=='none');
+    s.style.display=any?'':'none';
+  });
+}
+</script>
+</body>
+</html>
