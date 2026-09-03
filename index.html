@@ -16,6 +16,9 @@ header p{color:var(--sub);font-size:.92rem;margin:.3em 0}
 .badge{display:inline-block;background:var(--soft);color:var(--accent);font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:99px}
 .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:.9rem;margin:20px 0}
 .howto b{color:var(--accent)}
+.tabs{display:flex;gap:8px;margin-top:24px}
+.tab{flex:1;height:44px;border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
 section{margin-top:36px}
 h2{font-size:1.05rem;border-bottom:2px solid var(--ink);padding-bottom:6px}
 .cnt{font-size:.75rem;color:var(--sub);font-weight:400}
@@ -29,8 +32,9 @@ pre{margin:0;padding:14px;padding-top:40px;overflow-x:auto;font-size:.82rem;line
 code{font-family:"SF Mono",Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-all}
 .copy{position:absolute;top:8px;right:10px;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:5px 14px;font-size:.78rem;font-weight:700;cursor:pointer}
 .copy:active{opacity:.7}
+.note{margin:0;padding:8px 14px;border-top:1px dashed var(--line);color:var(--sub);font-size:.8rem}
 footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--sub);font-size:.8rem}
-#search{width:100%;height:42px;margin-top:18px;padding:0 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem;background:var(--card);color:var(--ink)}
+#search{width:100%;height:42px;margin-top:14px;padding:0 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem;background:var(--card);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -38,13 +42,18 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
 <header>
 <span class="badge">독자 지원 페이지</span>
 <h1>비전공자를 위한 바이브 코딩</h1>
-<p>책 속 모든 프롬프트와 명령어 79개를 복사 버튼으로 제공합니다.</p>
+<p>책 속 프롬프트와 명령어 95개를 복사 버튼으로 제공합니다.</p>
 </header>
 <div class="howto">
-<b>사용법</b> — 제목을 누르면 내용이 펼쳐집니다. <b>[복사]</b>를 누른 뒤 클로드 코드 채팅창에 붙여넣으세요.
+<b>사용법</b> — 제목을 누르면 내용이 펼쳐집니다. <b>[복사]</b>를 누른 뒤 붙여넣으세요.
 [대괄호] 부분은 여러분의 값으로 바꿔 넣는 자리입니다 (대괄호도 지웁니다).
 </div>
-<input id="search" type="search" placeholder="프롬프트 검색 (예: 가계부, SQL, 배포)" oninput="filterItems(this.value)">
+<div class="tabs">
+<button class="tab on" onclick="showTab('prompts',this)">🗣 프롬프트 (79)</button>
+<button class="tab" onclick="showTab('cmds',this)">⌨️ 설치·명령어 (16)</button>
+</div>
+<input id="search" type="search" placeholder="검색 (예: 가계부, 설치, 배포)" oninput="filterItems(this.value)">
+<div id="prompts">
 <section>
 <h2>2장 가계부 앱 <span class="cnt">13개</span></h2>
 <details class="p">
@@ -876,6 +885,83 @@ AI 요약이 필요한 부분은 로컬 올라마의 gemma3 모델을 사용해�
 지금 버전에서 로컬 서버를 켜는 명령어가 뭐야?</code></pre></div>
 </details>
 </section>
+</div>
+<div id="cmds" style="display:none">
+<section>
+<h2>1장 설치 (맥) <span class="cnt">8개</span></h2>
+<details class="p">
+<summary>Homebrew 설치</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</code></pre></div>
+</details>
+<details class="p">
+<summary>Homebrew 경로 등록 ① — 애플 실리콘 맥</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>(echo; echo &#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;) &gt;&gt; ~/.zprofile</code></pre></div>
+</details>
+<details class="p">
+<summary>Homebrew 경로 적용 ② — 애플 실리콘 맥</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</code></pre></div>
+</details>
+<details class="p">
+<summary>Homebrew 경로 등록 ① — 인텔 맥</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>(echo; echo &#x27;eval &quot;$(/usr/local/bin/brew shellenv)&quot;&#x27;) &gt;&gt; ~/.zprofile</code></pre></div>
+</details>
+<details class="p">
+<summary>Homebrew 경로 적용 ② — 인텔 맥</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>eval &quot;$(/usr/local/bin/brew shellenv)&quot;</code></pre></div>
+</details>
+<details class="p">
+<summary>Homebrew 설치 확인</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>brew --version</code></pre></div>
+</details>
+<details class="p">
+<summary>깃 설치</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>brew install git</code></pre></div>
+</details>
+<details class="p">
+<summary>깃 설치 확인</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>git --version</code></pre></div>
+</details>
+</section>
+<section>
+<h2>2장 가계부 앱 <span class="cnt">2개</span></h2>
+<details class="p">
+<summary>앱 실행 (로컬 서버 켜기)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>   npm run dev</code></pre></div>
+</details>
+<details class="p">
+<summary>배포용 값 보관 메모 양식</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>NEXT_PUBLIC_SUPABASE_URL      : https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY : sb_publishable_...</code></pre></div><p class="note">💡 메모장에 붙여 두고 값을 채워 보관하세요</p>
+</details>
+</section>
+<section>
+<h2>6장 개인 비서 시스템 <span class="cnt">6개</span></h2>
+<details class="p">
+<summary>파이썬 설치 확인 (맥)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>python3 --version</code></pre></div>
+</details>
+<details class="p">
+<summary>파이썬 설치 확인 (윈도우)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>python --version</code></pre></div>
+</details>
+<details class="p">
+<summary>올라마 모델 실행</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>ollama run gemma3</code></pre></div>
+</details>
+<details class="p">
+<summary>텔레그램 chat id 확인 주소</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>https://api.telegram.org/bot[봇토큰]/getUpdates</code></pre></div><p class="note">💡 [봇토큰]을 내 봇 토큰으로 바꿔 브라우저 주소창에 입력</p>
+</details>
+<details class="p">
+<summary>브리핑 수동 실행 (맥)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>python3 briefing.py</code></pre></div>
+</details>
+<details class="p">
+<summary>브리핑 수동 실행 (윈도우)</summary>
+<div class="codewrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>python briefing.py</code></pre></div>
+</details>
+</section>
+</div>
 <footer>
 화면이나 도구가 바뀌면 이 페이지가 먼저 업데이트됩니다. · 『비전공자를 위한 바이브 코딩 with 클로드 코드』 (위키북스)
 </footer>
@@ -888,12 +974,20 @@ function copyCode(btn){
     setTimeout(()=>btn.textContent='복사',1500);
   });
 }
+function showTab(id,btn){
+  document.getElementById('prompts').style.display=(id==='prompts')?'':'none';
+  document.getElementById('cmds').style.display=(id==='cmds')?'':'none';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  filterItems(document.getElementById('search').value);
+}
 function filterItems(q){
   q=q.trim().toLowerCase();
-  document.querySelectorAll('details.p').forEach(el=>{
+  const visiblePane=document.getElementById('prompts').style.display!=='none'?'prompts':'cmds';
+  document.querySelectorAll('#'+visiblePane+' details.p').forEach(el=>{
     el.style.display=(!q||el.innerText.toLowerCase().includes(q))?'':'none';
   });
-  document.querySelectorAll('section').forEach(s=>{
+  document.querySelectorAll('#'+visiblePane+' section').forEach(s=>{
     const any=[...s.querySelectorAll('details.p')].some(el=>el.style.display!=='none');
     s.style.display=any?'':'none';
   });
